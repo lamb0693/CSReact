@@ -13,9 +13,9 @@ export const LoginForm = () => {
     
     const handleSubmit = (event:React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
-        //Ajax login 
+        //******Ajax login 
         alert(tel + ", " + password)
-        //
+        //****** */
     }
 
     const handleTelChange = (event:React.ChangeEvent<HTMLInputElement>) => {
