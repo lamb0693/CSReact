@@ -4,53 +4,45 @@ import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import { useState } from 'react';
+import { useState, useContext} from 'react';
 import { SERVER_ADDRESS } from '../Cons';
-import axios, {AxiosError, AxiosResponse} from "axios"
+import axios, {AxiosResponse} from "axios"
+import { UserInfo, UserInfoStatusContext } from '../UserInfoStatusContext';
+import { useNavigate } from 'react-router-dom'
 
 
 export const LoginForm = () => {
+    const navigateTo  = useNavigate()
+
     const [tel, setTel] = useState('010XXXXYYYY')
     const [password, setPassword] = useState('')
 
-    const postData = {
-        tel: "01031795981",
-        password: "00000000",
-    }
-   
-
-    const getToken = async () => {
-        try{
-            const response : AxiosResponse =  await axios.post("http://localhost:8080/auth/login", 
-            {
-                tel : "01031795981",
-                password : "00000000"
-            })
-            console.log(response)
-        } catch(err ) {
-            console.log(err)
-        }
+    const userInfo : UserInfo | undefined  = useContext(UserInfoStatusContext)
+    if(userInfo === undefined){
+        return <div>Form is Not Initialized due to userInfo is undefined</div>
     }
 
-    const getToken2 = async () =>{
-        try {
-            const result = await axios.get(SERVER_ADDRESS + "/")
-
-            console.log(result.data)
-        } catch (err) {
-            console.log(err)
-        }
-    } 
 
     const getToken3 = async () => {
         try{
-            const response : AxiosResponse =  await axios.post("http://localhost:8080/getToken",
+            const response : AxiosResponse =  await axios.post(SERVER_ADDRESS + "/getToken",
                 {
                     tel : tel,
                     password : password
                 }
             ) 
-            console.log(response.data)
+            console.log(response.data, response.status)
+            if(response.status === 200){
+                userInfo.setAccessToken(response.data.accessToken)
+                userInfo.setTel(response.data.tel)
+                userInfo.setRole(response.data.role)
+                userInfo.setBLogin(true)
+                console.log("tel = " + userInfo.tel)
+                if(userInfo.role === 'USER') navigateTo("/")
+                else if (userInfo.role === 'CSR') navigateTo("/csr_home")
+            }else {
+                console.log("response is not 200")
+            }
         } catch(err ) {
             console.log(err)
         }  

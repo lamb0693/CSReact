@@ -1,11 +1,27 @@
-import React from 'react'
+import React, {useContext} from 'react'
 
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import { UserInfo, UserInfoStatusContext } from '../UserInfoStatusContext';
+import { CustomConfirmDialog } from './CustomConfirmDialog';
 
 export const MenuBar = () => {
+
+    const userInfo : UserInfo | undefined  = useContext(UserInfoStatusContext)
+    if(userInfo === undefined){
+        return <div>Form is Not Initialized due to userInfo is undefined</div>
+    }
+
+    const doLogout = () => {
+        if(userInfo === undefined) return
+        userInfo.setAccessToken("")
+        userInfo.setRole("")
+        userInfo.setBLogin(false)
+        userInfo.setTel("")
+    }
+
     return (
         <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
         <Container>
@@ -28,9 +44,26 @@ export const MenuBar = () => {
                 </NavDropdown>
             </Nav>
             <Nav>
-                <Nav.Link href="/login">Log in</Nav.Link>
+                {
+                    !userInfo.bLogin && (
+                        <>
+                            <Nav.Link href="/login">Log in</Nav.Link>
+                        </>
+                    )
+                }
+                {
+                    userInfo.bLogin && (
+                        <>
+                            <Nav.Link href="">{userInfo.tel}님</Nav.Link>
+                            <Nav.Link>{userInfo.role}</Nav.Link>
+                            <CustomConfirmDialog onConfirm={doLogout} text="Logout" message="Logout할까요?"/>
+                        </>
+
+                    )
+                }
+ 
                 <Nav.Link eventKey={2} href="#memes">
-                Dank memes
+                    무슨 link
                 </Nav.Link>
             </Nav>
             </Navbar.Collapse>
