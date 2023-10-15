@@ -1,6 +1,50 @@
 import { Alert, Table } from "react-bootstrap"
+import { UserInfo, UserInfoStatusContext } from '../UserInfoStatusContext';
+import { useContext, useEffect, useState} from 'react'
+import axios, {AxiosResponse} from "axios";
+import { SERVER_ADDRESS } from "../Cons";
 
 export const CSRHome = () => {
+
+    type BoardListType = {
+        "board_id": number,
+        "name": string,
+        "content": string,
+        "message": string,
+        "strUpdatedAt": string,
+        "breplied": false
+    }
+
+    type PagedBoardListType = {
+        boardList : BoardListType,
+        currentPage : number,
+        pageSize : number,
+        totalElements : number
+    }
+    
+    const [boardList, setBoardList] = useState(null)
+    const [targetPage, setTargetPage] = useState(0)
+
+    const userInfo : UserInfo | undefined  = useContext(UserInfoStatusContext)
+
+    const getBoardList = async () => {
+        const authHeader : string = "Bearer:" + userInfo?.accessToken
+        console.log(authHeader)
+        const result : AxiosResponse= await axios.get(SERVER_ADDRESS + "/api/board/listUnReplied/" + targetPage, {
+                headers: {Authorization: authHeader,},
+        })
+        console.log(result.data)
+
+    }
+    
+    useEffect( () => {
+        console.log("useEffect called")
+        // if(userInfo?.accessToken !== "") getBoardList()
+    }) 
+
+    if(userInfo === undefined){
+        return <div>Form is Not Initialized due to userInfo is undefined</div>
+    }
 
     return (
         <>

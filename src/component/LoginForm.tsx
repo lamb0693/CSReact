@@ -4,7 +4,7 @@ import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import { useState, useContext} from 'react';
+import { useState, useContext, useEffect} from 'react';
 import { SERVER_ADDRESS } from '../Cons';
 import axios, {AxiosResponse} from "axios"
 import { UserInfo, UserInfoStatusContext } from '../UserInfoStatusContext';
@@ -18,10 +18,15 @@ export const LoginForm = () => {
     const [password, setPassword] = useState('')
 
     const userInfo : UserInfo | undefined  = useContext(UserInfoStatusContext)
+
+    useEffect( () => {
+        if(userInfo?.role === 'USER') navigateTo("/")
+        else if (userInfo?.role === 'CSR') navigateTo("/csr_home")
+    }) 
+
     if(userInfo === undefined){
         return <div>Form is Not Initialized due to userInfo is undefined</div>
     }
-
 
     const getToken3 = async () => {
         try{
@@ -38,8 +43,7 @@ export const LoginForm = () => {
                 userInfo.setRole(response.data.role)
                 userInfo.setBLogin(true)
                 console.log("tel = " + userInfo.tel)
-                if(userInfo.role === 'USER') navigateTo("/")
-                else if (userInfo.role === 'CSR') navigateTo("/csr_home")
+                console.log(userInfo.role)
             }else {
                 console.log("response is not 200")
             }
@@ -52,12 +56,10 @@ export const LoginForm = () => {
     
     const handleSubmit = (event:React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
-        //******Ajax login 
         alert(tel + ", " + password)
         getToken3()
 
-        //****** */
-    }
+     }
 
     const handleTelChange = (event:React.ChangeEvent<HTMLInputElement>) => {
         event.preventDefault()
