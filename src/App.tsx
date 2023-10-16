@@ -9,10 +9,9 @@ import { Routes, Route, BrowserRouter} from 'react-router-dom'
 import { LoginForm } from './component/LoginForm';
 import { UserInfoProvider } from './UserInfoStatusContext';
 import { CSRHome } from './component/CSRHome';
+import { LogoutForm } from './component/LogoutForm';
 
 function App() {
-
-
     return (
         <UserInfoProvider>
             <div className="App">
@@ -23,6 +22,7 @@ function App() {
                         <Route path="/" element={<ClientHome/>}/>
                         <Route path="/csr_home" element={<CSRHome/>}/>
                         <Route path="/login" element={<LoginForm/>}/>
+                        <Route path="/logout" element={<LogoutForm/>}/>
                         {/* <Route path="/about/intro" element={<Content/>}/>
                         <Route path="/about/intro/:userId" element={<Content/>}/>
                         <Route path='profile/*' element={<Home name={"Profile"}/>}>
@@ -34,7 +34,6 @@ function App() {
                 <Footer/>
             </div>
         </UserInfoProvider>
-
     );
 }
 

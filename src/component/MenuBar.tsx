@@ -30,7 +30,7 @@ export const MenuBar = () => {
             <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
                 <Nav.Link href="#features">Features</Nav.Link>
-                <Nav.Link href="#pricing">Pricing</Nav.Link>
+                <Nav.Link href="csr_home">CSR Home</Nav.Link>
                 <NavDropdown title="Dropdown" id="collapsible-nav-dropdown">
                 <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.2">
@@ -56,7 +56,8 @@ export const MenuBar = () => {
                         <>
                             <Nav.Link href="">{userInfo.tel}님</Nav.Link>
                             <Nav.Link>{userInfo.role}</Nav.Link>
-                            <CustomConfirmDialog onConfirm={doLogout} text="Logout" message="Logout할까요?"/>
+                            {/* <CustomConfirmDialog onConfirm={doLogout} text="Logout" message="Logout할까요?"/> */}
+                            <Nav.Link href="/logout">Logout</Nav.Link>
                         </>
 
                     )

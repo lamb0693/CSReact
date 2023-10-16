@@ -44,6 +44,11 @@ export const LoginForm = () => {
                 userInfo.setBLogin(true)
                 console.log("tel = " + userInfo.tel)
                 console.log(userInfo.role)
+                /* local storage 에 저장*/
+                localStorage.setItem("accessToken", response.data.accessToken)
+                localStorage.setItem("tel", response.data.tel)
+                localStorage.setItem("role", response.data.role)
+                localStorage.setItem("bLogin", "LOGIN")
             }else {
                 console.log("response is not 200")
             }

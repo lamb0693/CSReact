@@ -18,10 +18,20 @@ type UserInfoProviderProps = {
 export const UserInfoStatusContext = createContext<UserInfo | undefined>(undefined)
 
 export const UserInfoProvider : React.FC<UserInfoProviderProps> = ({children}) => {
-    const [accessToken, setAccessToken] = useState("")
-    const [tel, setTel] = useState("")
-    const [role, setRole] = useState("")
-    const [bLogin, setBLogin] = useState(false)
+
+    const strAccessToken : string | null =  localStorage.getItem("accessToken") 
+    const [accessToken, setAccessToken] = useState( strAccessToken===null? "": strAccessToken)
+    const strTel : string | null =  localStorage.getItem("tel") 
+    const [tel, setTel] = useState(strTel===null? "": strTel)
+    const strRole : string | null =  localStorage.getItem("role") 
+    const [role, setRole] = useState(strRole===null? "": strRole)
+    const strBLogin : string | null =  localStorage.getItem("bLogin") 
+    const [bLogin, setBLogin] = useState( (strBLogin!==null && strBLogin==="LOGIN")? true: false)
+
+    // const [accessToken, setAccessToken] = useState(localStorage.getItem("accessToken"))
+    // const [tel, setTel] = useState("")
+    // const [role, setRole] = useState("")
+    // const [bLogin, setBLogin] = useState(false)
 
     const userInfo : UserInfo = {
         accessToken, setAccessToken, tel, setTel, role, setRole, bLogin, setBLogin
