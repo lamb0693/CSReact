@@ -28,15 +28,16 @@ export const CSRHome = () => {
     const userInfo : UserInfo | undefined  = useContext(UserInfoStatusContext)
 
     const getBoardList = async () => {
-        if(localStorage.getItem("accessToken") == null && localStorage.getItem("accesstoken")=="" )  return
+        if(localStorage.getItem("accessToken") == null && localStorage.getItem("accesstoken")==="" )  return
 
         const authHeader : string = "Bearer:" + localStorage.getItem("accessToken")
         console.log(authHeader)
 
+  
         try {
-            const result = await axios.get(SERVER_ADDRESS + '/api/board/getUnreplied', {
+            const result = await axios.get("api/board/listUnReplied/0",  {
                 headers: {
-                    'Authorization': authHeader
+                    Authorization: authHeader,
                 }
             })
 
