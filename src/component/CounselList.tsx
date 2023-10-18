@@ -2,9 +2,9 @@ import { Alert, Table } from "react-bootstrap"
 import { UserInfo, UserInfoStatusContext } from '../UserInfoStatusContext';
 import { useContext, useEffect, useState} from 'react'
 import axios, {AxiosResponse} from "axios";
-//import { SERVER_ADDRESS } from "../Cons"; 프록시 설정후 필요 없어짐
+// import { SERVER_ADDRESS } from "../Cons"; 프록시 설정후 필요 없어짐
 
-export const CSRHome = () => {
+export const CounselList = () => {
 
     type BoardListType = {
         "board_id": number,
@@ -15,14 +15,6 @@ export const CSRHome = () => {
         "breplied": false
     }
 
-    type PagedBoardListType = {
-        memberListDTOList : Array<BoardListType>,
-        currentPage : number,
-        pageSize : number,
-        totalElements : number
-    }
-
-   
     const [boardListArray, setBoardListArray] = useState< Array<BoardListType> | null>(null)
     const [targetPage, setTargetPage] = useState(0)
 
@@ -36,14 +28,18 @@ export const CSRHome = () => {
 
   
         try {
-            const result : AxiosResponse<PagedBoardListType> = await axios.get("api/board/listUnReplied/0",  {
-                headers: {
+            if(userInfo==null || userInfo===undefined) return
+            const formData = new FormData();
+            formData.append('noOfDisplay', '30');
+            formData.append('tel', userInfo.tel)
+            const result : AxiosResponse<Array<BoardListType>> = await axios.post("api/board/list", formData,  
+                {headers: {
                     Authorization: authHeader,
                 }
             })
 
-            console.log(result.data.memberListDTOList)
-            setBoardListArray(result.data.memberListDTOList)
+            console.log(result.data)
+            setBoardListArray(result.data)
             
         } catch ( err){
             console.log( err )
@@ -56,10 +52,6 @@ export const CSRHome = () => {
         getBoardList()
     }, []) 
 
-    const handleClick : React.MouseEventHandler<HTMLButtonElement> = (event : React.MouseEvent<HTMLButtonElement>) => {
-        console.log(event.currentTarget.id)
-    }
-
     if(userInfo === undefined){
         return <div>Form is Not Initialized due to userInfo is undefined</div>
     }
@@ -67,7 +59,7 @@ export const CSRHome = () => {
     return (
         <>
             <Alert variant="primary">
-                상담 대기 목록
+                상담 내역
             </Alert>
             <Table striped bordered hover>
                 <thead>
@@ -76,7 +68,6 @@ export const CSRHome = () => {
                         <th>종류</th>
                         <th>메시지</th>
                         <th>생성날자</th>
-                        <th>결과달기</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -88,7 +79,6 @@ export const CSRHome = () => {
                                     <td>{boardList.content}</td>
                                     <td>{boardList.message}</td>
                                     <td>{boardList.strUpdatedAt}</td>
-                                    <td><button onClick={handleClick} id={""+boardList.board_id}>답변달기</button></td>
                                 </tr>
                             )
                         })

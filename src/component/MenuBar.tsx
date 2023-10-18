@@ -29,8 +29,8 @@ export const MenuBar = () => {
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
-                <Nav.Link href="#features">Features</Nav.Link>
-                <Nav.Link href="csr_home">CSR Home</Nav.Link>
+                <Nav.Link href="/counsel_list">User Home</Nav.Link>
+                <Nav.Link href="/csr_home">CSR Home</Nav.Link>
                 <NavDropdown title="Dropdown" id="collapsible-nav-dropdown">
                 <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.2">

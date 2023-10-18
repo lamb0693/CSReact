@@ -10,6 +10,7 @@ import { LoginForm } from './component/LoginForm';
 import { UserInfoProvider } from './UserInfoStatusContext';
 import { CSRHome } from './component/CSRHome';
 import { LogoutForm } from './component/LogoutForm';
+import { CounselList } from './component/CounselList';
 
 function App() {
     return (
@@ -21,6 +22,7 @@ function App() {
                     <Routes>
                         <Route path="/" element={<ClientHome/>}/>
                         <Route path="/csr_home" element={<CSRHome/>}/>
+                        <Route path="/counsel_list" element={<CounselList/>}/>
                         <Route path="/login" element={<LoginForm/>}/>
                         <Route path="/logout" element={<LogoutForm/>}/>
                         {/* <Route path="/about/intro" element={<Content/>}/>
