@@ -5,7 +5,6 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { UserInfo, UserInfoStatusContext } from '../UserInfoStatusContext';
-import { CustomConfirmDialog } from './CustomConfirmDialog';
 
 export const MenuBar = () => {
 
@@ -48,6 +47,7 @@ export const MenuBar = () => {
                     !userInfo.bLogin && (
                         <>
                             <Nav.Link href="/login">Log in</Nav.Link>
+                            <Nav.Link href="/register">회원가입</Nav.Link>
                         </>
                     )
                 }

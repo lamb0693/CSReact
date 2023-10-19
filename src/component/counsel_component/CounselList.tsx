@@ -1,7 +1,8 @@
 import { Alert, Table } from "react-bootstrap"
-import { UserInfo, UserInfoStatusContext } from '../UserInfoStatusContext';
+import { UserInfo, UserInfoStatusContext } from '../../UserInfoStatusContext';
 import { useContext, useEffect, useState} from 'react'
 import axios, {AxiosResponse} from "axios";
+import { AddCounsel } from "../../AddCounsel";
 // import { SERVER_ADDRESS } from "../Cons"; 프록시 설정후 필요 없어짐
 
 export const CounselList = () => {
@@ -46,7 +47,7 @@ export const CounselList = () => {
         }
 
     }
-    
+   
     useEffect( () => {
         console.log("useEffect called")
         getBoardList()
@@ -61,6 +62,7 @@ export const CounselList = () => {
             <Alert variant="primary">
                 상담 내역
             </Alert>
+            <AddCounsel getBoardList={getBoardList}></AddCounsel>
             <Table striped bordered hover>
                 <thead>
                     <tr>
