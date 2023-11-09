@@ -32,7 +32,7 @@ export const CounselList = () => {
             if(userInfo==null || userInfo===undefined) return
             const formData = new FormData();
             formData.append('noOfDisplay', '30');
-            formData.append('tel', userInfo.tel)
+            formData.append('tel', userInfo.customorTel)
             const result : AxiosResponse<Array<BoardListType>> = await axios.post("api/board/list", formData,  
                 {headers: {
                     Authorization: authHeader,

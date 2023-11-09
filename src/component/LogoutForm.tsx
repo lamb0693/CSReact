@@ -18,11 +18,13 @@ export const LogoutForm = () => {
         localStorage.removeItem("tel")
         localStorage.removeItem("role")
         localStorage.removeItem("bLogin")
+        localStorage.removeItem("customerTel")
 
         userInfo.setTel("")
         userInfo.setAccessToken("")
         userInfo.setRole("")
         userInfo.setBLogin(false)
+        userInfo.setCustomerTel("")
 
         navigateTo("/")
     }

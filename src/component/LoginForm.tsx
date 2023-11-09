@@ -43,11 +43,14 @@ export const LoginForm = () => {
                 userInfo.setTel(response.data.tel)
                 userInfo.setRole(response.data.role)
                 userInfo.setBLogin(true)
+                console.log("tel in response" ,response.data.tel)
+                userInfo.setCustomerTel(response.data.tel)
                 console.log("tel = " + userInfo.tel)
-                console.log(userInfo.role)
+                console.log("userInfo = " + userInfo.role)
                 /* local storage 에 저장*/
                 localStorage.setItem("accessToken", response.data.accessToken)
                 localStorage.setItem("tel", response.data.tel)
+                localStorage.setItem("customertel", response.data.tel)
                 localStorage.setItem("role", response.data.role)
                 localStorage.setItem("bLogin", "LOGIN")
             }else {
