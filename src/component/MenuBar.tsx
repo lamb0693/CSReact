@@ -28,19 +28,9 @@ export const MenuBar = () => {
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
-                <Nav.Link href="/counsel_list">User Home</Nav.Link>
-                <Nav.Link href="/csr_home">CSR Home</Nav.Link>
-                <NavDropdown title="Dropdown" id="collapsible-nav-dropdown">
-                <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.2">
-                    Another action
-                </NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="#action/3.4">
-                    Separated link
-                </NavDropdown.Item>
-                </NavDropdown>
+                {userInfo.role=="USER" && <Nav.Link href="/counsel_list">고객 게시판</Nav.Link>}
+                {userInfo.role=="CSR" && <Nav.Link href="/csr_home">상담대기 게시판</Nav.Link> }
+                {userInfo.role=="CSR" && userInfo.customorTel != "" && <Nav.Link href="/csr_reply">고객 문의 답변 달기</Nav.Link>}
             </Nav>
             <Nav>
                 {
@@ -62,10 +52,6 @@ export const MenuBar = () => {
 
                     )
                 }
- 
-                <Nav.Link eventKey={2} href="#memes">
-                    무슨 link
-                </Nav.Link>
             </Nav>
             </Navbar.Collapse>
         </Container>

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router"
 import { UserInfo } from "../UserInfoStatusContext"
 import { useContext } from "react"
 import { UserInfoStatusContext } from "../UserInfoStatusContext"
-import { Alert } from "react-bootstrap"
+import { Alert, Container } from "react-bootstrap"
 
 export const LogoutForm = () => {
     const navigateTo = useNavigate()
@@ -28,12 +28,14 @@ export const LogoutForm = () => {
     }
 
     return(
-        <div>
-            <Alert variant="primary">
-                Logout Page
-            </Alert>
-            <CustomConfirmDialog onConfirm={doLogout} text="Logout" message="Logout할까요?"/>  
-        </div>
+        <Container>
+            <div>
+                <Alert variant="primary">
+                    Logout Page
+                </Alert>
+                <CustomConfirmDialog onConfirm={doLogout} text="Logout" message="Logout할까요?"/>  
+            </div>
+        </Container>
         
     )
 }

@@ -1,0 +1,13 @@
+.line1{
+    margin-top: 10px;
+    font-size: larger;
+    text-align: left;
+    padding-left: 10px;
+    background-color: #dddddd;
+}
+.line2{
+    font-size:medium;
+    text-align: left;
+    padding-left: 10px;
+    background-color: #dddddd;
+}

@@ -12,6 +12,7 @@ import { CSRHome } from './component/CSRHome';
 import { LogoutForm } from './component/LogoutForm';
 import { CounselList } from './component/counsel_component/CounselList';
 import { Register } from './component/Register';
+import { CSRReply } from './component/CSRReply';
 
 function App() {
     return (
@@ -24,6 +25,7 @@ function App() {
                         <Route path="/" element={<ClientHome/>}/>
                         <Route path="/csr_home" element={<CSRHome/>}/>
                         <Route path="/counsel_list" element={<CounselList/>}/>
+                        <Route path="/csr_reply" element={<CSRReply/>}/>
                         <Route path="/login" element={<LoginForm/>}/>
                         <Route path="/register" element={<Register/>}/>
                         <Route path="/logout" element={<LogoutForm/>}/>

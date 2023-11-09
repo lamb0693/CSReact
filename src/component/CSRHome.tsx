@@ -2,6 +2,7 @@ import { Alert, Table } from "react-bootstrap"
 import { UserInfo, UserInfoStatusContext } from '../UserInfoStatusContext';
 import { useContext, useEffect, useState} from 'react'
 import axios, {AxiosResponse} from "axios";
+import Container from 'react-bootstrap/Container';
 //import { SERVER_ADDRESS } from "../Cons"; 프록시 설정후 필요 없어짐
 
 export const CSRHome = () => {
@@ -12,7 +13,8 @@ export const CSRHome = () => {
         "content": string,
         "message": string,
         "strUpdatedAt": string,
-        "breplied": false
+        "breplied": boolean,
+        "tel" : string
     }
 
     type PagedBoardListType = {
@@ -56,8 +58,15 @@ export const CSRHome = () => {
         getBoardList()
     }, []) 
 
-    const handleClick : React.MouseEventHandler<HTMLButtonElement> = (event : React.MouseEvent<HTMLButtonElement>) => {
-        console.log(event.currentTarget.id)
+    const handleClick : React.MouseEventHandler<HTMLButtonElement> = (
+        event : React.MouseEvent<HTMLButtonElement> ) => {
+        const strCusTel = event.currentTarget.getAttribute("data-tel")
+        console.log("customerTel setting : ", strCusTel)
+        if(strCusTel){
+            userInfo?.setCustomerTel(strCusTel)
+            localStorage.setItem("customerTel", strCusTel)
+            console.log(localStorage.getItem("customerTel"))
+        }      
     }
 
     if(userInfo === undefined){
@@ -65,7 +74,7 @@ export const CSRHome = () => {
     }
 
     return (
-        <>
+        <Container>
             <Alert variant="primary">
                 상담 대기 목록
             </Alert>
@@ -88,14 +97,14 @@ export const CSRHome = () => {
                                     <td>{boardList.content}</td>
                                     <td>{boardList.message}</td>
                                     <td>{boardList.strUpdatedAt}</td>
-                                    <td><button onClick={handleClick} id={""+boardList.board_id}>답변달기</button></td>
+                                    <td><button data-tel={boardList.tel} onClick={handleClick} id={""+boardList.board_id}>답변달기</button></td>
                                 </tr>
                             )
                         })
                     }
                 </tbody>
             </Table>
-        </>
+        </Container>
 
     )
 }

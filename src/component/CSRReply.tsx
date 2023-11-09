@@ -1,11 +1,11 @@
 import { Alert, Container, Table } from "react-bootstrap"
-import { UserInfo, UserInfoStatusContext } from '../../UserInfoStatusContext';
+import { UserInfo, UserInfoStatusContext } from "../UserInfoStatusContext";
 import { useContext, useEffect, useState} from 'react'
 import axios, {AxiosResponse} from "axios";
-import { AddCounsel } from "../../AddCounsel";
+import { AddCounsel } from "../AddCounsel";
 // import { SERVER_ADDRESS } from "../Cons"; 프록시 설정후 필요 없어짐
 
-export const CounselList = () => {
+export const CSRReply = () => {
 
     type BoardListType = {
         "board_id": number,
@@ -32,7 +32,7 @@ export const CounselList = () => {
             if(userInfo==null || userInfo===undefined) return
             const formData = new FormData();
             formData.append('noOfDisplay', '30');
-            formData.append('tel', userInfo.tel)
+            formData.append('tel', userInfo?.customorTel)
             const result : AxiosResponse<Array<BoardListType>> = await axios.post("api/board/list", formData,  
                 {headers: {
                     Authorization: authHeader,
@@ -60,7 +60,7 @@ export const CounselList = () => {
     return (
         <Container>
             <Alert variant="primary">
-                상담 내역
+                답변 달기  고객 전화 번호 = {userInfo?.customorTel}
             </Alert>
             <AddCounsel getBoardList={getBoardList}></AddCounsel>
             <Table striped bordered hover>

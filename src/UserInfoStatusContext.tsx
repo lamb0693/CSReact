@@ -5,10 +5,12 @@ export type UserInfo = {
     tel : string,
     role : string,
     bLogin : boolean,
+    customorTel : string,
     setAccessToken : (token : string) => void,
     setTel : (tel : string) => void,
     setRole : (role : string) => void,
-    setBLogin : (bLogin : boolean) => void
+    setBLogin : (bLogin : boolean) => void,
+    setCustomerTel : (customerTel : string) => void
 }
 
 type UserInfoProviderProps = {
@@ -27,6 +29,8 @@ export const UserInfoProvider : React.FC<UserInfoProviderProps> = ({children}) =
     const [role, setRole] = useState(strRole===null? "": strRole)
     const strBLogin : string | null =  localStorage.getItem("bLogin") 
     const [bLogin, setBLogin] = useState( (strBLogin!==null && strBLogin==="LOGIN")? true: false)
+    const strCustomerTel : string | null =  localStorage.getItem("customerTel") 
+    const [customorTel, setCustomerTel] = useState(strCustomerTel===null? "": strCustomerTel)
 
     // const [accessToken, setAccessToken] = useState(localStorage.getItem("accessToken"))
     // const [tel, setTel] = useState("")
@@ -34,7 +38,7 @@ export const UserInfoProvider : React.FC<UserInfoProviderProps> = ({children}) =
     // const [bLogin, setBLogin] = useState(false)
 
     const userInfo : UserInfo = {
-        accessToken, setAccessToken, tel, setTel, role, setRole, bLogin, setBLogin
+        accessToken, setAccessToken, tel, setTel, role, setRole, bLogin, setBLogin, customorTel, setCustomerTel
     } 
 
     return (

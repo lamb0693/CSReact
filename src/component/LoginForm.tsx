@@ -30,7 +30,7 @@ export const LoginForm = () => {
 
     const getToken3 = async () => {
         try{
-            const response : AxiosResponse =  await axios.post(SERVER_ADDRESS + "/getToken",
+            const response : AxiosResponse =  await axios.post("/getToken",
                 {
                     tel : tel,
                     password : password
@@ -51,9 +51,11 @@ export const LoginForm = () => {
                 localStorage.setItem("bLogin", "LOGIN")
             }else {
                 console.log("response is not 200")
+                alert("bad request or server error")
             }
         } catch(err ) {
             console.log(err)
+            alert("bad request or server error")
         }  
  
     }
@@ -77,7 +79,7 @@ export const LoginForm = () => {
     }
 
     return (
-        <Container style={{paddingTop:"2vh"}}>
+        <Container style={{paddingTop:"2vh", backgroundColor:"#eeeeee", height: "60vh"}}>
 
             <Form onSubmit={handleSubmit}>
                 <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
@@ -106,7 +108,7 @@ export const LoginForm = () => {
 
                 <Form.Group as={Row} className="mb-3">
                     <Col sm={{ span: 10, offset: 2 }}>
-                    <Button type="submit">Sign in</Button>
+                    <Button type="submit">로그 인</Button>
                     </Col>
                 </Form.Group>
             </Form>
