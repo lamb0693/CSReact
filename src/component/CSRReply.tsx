@@ -60,13 +60,13 @@ export const CSRReply = () => {
     return (
         <Container>
             <Alert variant="primary">
-                답변 달기  고객 전화 번호 = {userInfo?.customorTel}
+                답변 달기 : 상담 중인 고객 전화 번호 : {userInfo?.customorTel}
             </Alert>
             <AddCounsel getBoardList={getBoardList}></AddCounsel>
             <Table striped bordered hover>
                 <thead>
                     <tr>
-                        <th>고객 전화번호</th>
+                        <th>고객 이름</th>
                         <th>종류</th>
                         <th>메시지</th>
                         <th>생성날자</th>

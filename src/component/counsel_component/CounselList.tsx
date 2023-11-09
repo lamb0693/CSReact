@@ -66,7 +66,7 @@ export const CounselList = () => {
             <Table striped bordered hover>
                 <thead>
                     <tr>
-                        <th>고객 전화번호</th>
+                        <th>작성자</th>
                         <th>종류</th>
                         <th>메시지</th>
                         <th>생성날자</th>

@@ -38,6 +38,7 @@ export const LoginForm = () => {
             ) 
             console.log(response.data, response.status)
             if(response.status === 200){
+                alert('로그인 되었습니다')
                 userInfo.setAccessToken(response.data.accessToken)
                 userInfo.setTel(response.data.tel)
                 userInfo.setRole(response.data.role)
@@ -63,7 +64,7 @@ export const LoginForm = () => {
     
     const handleSubmit = (event:React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
-        alert(tel + ", " + password)
+        //alert(tel + ", " + password)
         getToken3()
 
      }

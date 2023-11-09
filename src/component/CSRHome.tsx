@@ -3,9 +3,12 @@ import { UserInfo, UserInfoStatusContext } from '../UserInfoStatusContext';
 import { useContext, useEffect, useState} from 'react'
 import axios, {AxiosResponse} from "axios";
 import Container from 'react-bootstrap/Container';
+import { useNavigate } from "react-router-dom";
 //import { SERVER_ADDRESS } from "../Cons"; 프록시 설정후 필요 없어짐
 
 export const CSRHome = () => {
+
+    const navigateTo = useNavigate()
 
     type BoardListType = {
         "board_id": number,
@@ -66,6 +69,7 @@ export const CSRHome = () => {
             userInfo?.setCustomerTel(strCusTel)
             localStorage.setItem("customerTel", strCusTel)
             console.log(localStorage.getItem("customerTel"))
+            navigateTo("/csr_reply")
         }      
     }
 
@@ -81,7 +85,7 @@ export const CSRHome = () => {
             <Table striped bordered hover>
                 <thead>
                     <tr>
-                        <th>고객 전화번호</th>
+                        <th>이름</th>
                         <th>종류</th>
                         <th>메시지</th>
                         <th>생성날자</th>
