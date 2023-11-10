@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import { useState, useContext, useEffect} from 'react';
-import { SERVER_ADDRESS } from '../Cons';
+//import { SERVER_ADDRESS } from '../Cons';
 import axios, {AxiosResponse} from "axios"
 import { UserInfo, UserInfoStatusContext } from '../UserInfoStatusContext';
 import { useNavigate } from 'react-router-dom'
@@ -23,6 +23,11 @@ export const LoginForm = () => {
         if(userInfo?.role === 'USER') navigateTo("/")
         else if (userInfo?.role === 'CSR') navigateTo("/csr_home")
     }) 
+
+    // test용
+    // useEffect(() => {
+    //     console.log("userInfo", userInfo?.tel, userInfo?.customorTel, userInfo?.role);
+    //   }, [userInfo?.customorTel]);
 
     if(userInfo === undefined){
         return <div>Form is Not Initialized due to userInfo is undefined</div>
@@ -43,14 +48,13 @@ export const LoginForm = () => {
                 userInfo.setTel(response.data.tel)
                 userInfo.setRole(response.data.role)
                 userInfo.setBLogin(true)
-                console.log("tel in response" ,response.data.tel)
-                userInfo.setCustomerTel(response.data.tel)
-                console.log("tel = " + userInfo.tel)
-                console.log("userInfo = " + userInfo.role)
+                userInfo.setCustomerTel( prev => response.data.tel )
                 /* local storage 에 저장*/
+                console.log("tel 저장", response.data.tel)
                 localStorage.setItem("accessToken", response.data.accessToken)
                 localStorage.setItem("tel", response.data.tel)
-                localStorage.setItem("customertel", response.data.tel)
+                console.log("customerTel 저장", response.data.tel)
+                localStorage.setItem("customerTel", response.data.tel)
                 localStorage.setItem("role", response.data.role)
                 localStorage.setItem("bLogin", "LOGIN")
             }else {

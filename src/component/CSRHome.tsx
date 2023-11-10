@@ -29,7 +29,7 @@ export const CSRHome = () => {
 
    
     const [boardListArray, setBoardListArray] = useState< Array<BoardListType> | null>(null)
-    const [targetPage, setTargetPage] = useState(0)
+    //const [targetPage, setTargetPage] = useState(0)
 
     const userInfo : UserInfo | undefined  = useContext(UserInfoStatusContext)
 
@@ -66,7 +66,7 @@ export const CSRHome = () => {
         const strCusTel = event.currentTarget.getAttribute("data-tel")
         console.log("customerTel setting : ", strCusTel)
         if(strCusTel){
-            userInfo?.setCustomerTel(strCusTel)
+            userInfo?.setCustomerTel(prev  => strCusTel)
             localStorage.setItem("customerTel", strCusTel)
             console.log(localStorage.getItem("customerTel"))
             navigateTo("/csr_reply")
@@ -96,7 +96,7 @@ export const CSRHome = () => {
                     {
                         boardListArray?.map( (boardList) => {
                             return(
-                                <tr key={boardList.board_id}>
+                                <tr key={boardList.board_id} >
                                     <td>{boardList.name}</td>
                                     <td>{boardList.content}</td>
                                     <td>{boardList.message}</td>

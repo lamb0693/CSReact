@@ -3,7 +3,6 @@ import React, {useContext} from 'react'
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
 import { UserInfo, UserInfoStatusContext } from '../UserInfoStatusContext';
 
 export const MenuBar = () => {
@@ -13,13 +12,13 @@ export const MenuBar = () => {
         return <div>Form is Not Initialized due to userInfo is undefined</div>
     }
 
-    const doLogout = () => {
-        if(userInfo === undefined) return
-        userInfo.setAccessToken("")
-        userInfo.setRole("")
-        userInfo.setBLogin(false)
-        userInfo.setTel("")
-    }
+    // const doLogout = () => {
+    //     if(userInfo === undefined) return
+    //     userInfo.setAccessToken("")
+    //     userInfo.setRole("")
+    //     userInfo.setBLogin(false)
+    //     userInfo.setTel("")
+    // }
 
     return (
         <Container>
@@ -29,9 +28,9 @@ export const MenuBar = () => {
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto">
-                        {userInfo.role=="USER" && <Nav.Link href="/counsel_list">고객 게시판</Nav.Link>}
-                        {userInfo.role=="CSR" && <Nav.Link href="/csr_home">상담대기 게시판</Nav.Link> }
-                        {userInfo.role=="CSR" && userInfo.customorTel != "" && <Nav.Link href="/csr_reply">고객 문의 답변 달기</Nav.Link>}
+                        {userInfo.role==="USER" && <Nav.Link href="/counsel_list">고객 게시판</Nav.Link>}
+                        {userInfo.role==="CSR" && <Nav.Link href="/csr_home">상담대기 게시판</Nav.Link> }
+                        {userInfo.role==="CSR" && userInfo.customorTel !== "" && <Nav.Link href="/csr_reply">고객 문의 답변 달기</Nav.Link>}
                     </Nav>
                     <Nav>
                         {

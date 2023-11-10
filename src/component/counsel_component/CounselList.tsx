@@ -17,7 +17,6 @@ export const CounselList = () => {
     }
 
     const [boardListArray, setBoardListArray] = useState< Array<BoardListType> | null>(null)
-    const [targetPage, setTargetPage] = useState(0)
 
     const userInfo : UserInfo | undefined  = useContext(UserInfoStatusContext)
 

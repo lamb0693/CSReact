@@ -20,13 +20,19 @@ export const AddCounsel = (props : AddCounselProps) => {
         //     console.error(userInfo, message)
         //     return <div>Upload Error</div>
         // } 
-        if(localStorage.getItem("accessToken") == null || localStorage.getItem("accesstoken")==="" )  return
+        if(localStorage.getItem("accessToken") === null || localStorage.getItem("accesstoken")==="" )  return
         const authHeader : string = "Bearer:" + localStorage.getItem("accessToken")
         console.log(authHeader)
 
         // 자기 전화번호는 accessToken으로 감, customerTel만 실어서 보냄
-        if(localStorage.getItem("tel") == null  || localStorage.getItem("tel")==="" ) return
-        const strTel : string = "" + localStorage.getItem("customerTel")
+        if(localStorage.getItem("tel") === null  || localStorage.getItem("tel")==="" ) return
+        if(userInfo == null) return
+
+        const strTel = userInfo.customorTel  
+        console.log("customerTel ", strTel)  
+
+        //const strTel : string ="" + localStorage.getItem("customerTel")
+
 
 
         const formData = new FormData()
@@ -44,15 +50,18 @@ export const AddCounsel = (props : AddCounselProps) => {
             console.log(result.data)
             props.getBoardList()
 
-            // 성공하면 답변 모두 확인으로 처리
-            const formData2 = new FormData()
-            formData2.append('customerTel', strTel)
-            const result2 : AxiosResponse<String> = await axios.post("/api/board/markReply", formData2, {
-                headers: {
-                    Authorization: authHeader,
-                }
-            })
-            console.log(result2.data)
+
+            // CSR 이면 성공하면 답변 모두 확인으로 처리
+            if(userInfo.role === "CSR"){
+                const formData2 = new FormData()
+                formData2.append('customerTel', strTel)
+                const result2 : AxiosResponse<String> = await axios.post("/api/board/markReply", formData2, {
+                    headers: {
+                        Authorization: authHeader,
+                    }
+                })
+                console.log(result2.data)
+            }
             
         } catch ( err){
             console.log( err )

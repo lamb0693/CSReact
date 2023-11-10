@@ -24,7 +24,7 @@ export const LogoutForm = () => {
         userInfo.setAccessToken("")
         userInfo.setRole("")
         userInfo.setBLogin(false)
-        userInfo.setCustomerTel("")
+        userInfo.setCustomerTel(prev => "")
 
         navigateTo("/")
     }

@@ -10,7 +10,8 @@ export type UserInfo = {
     setTel : (tel : string) => void,
     setRole : (role : string) => void,
     setBLogin : (bLogin : boolean) => void,
-    setCustomerTel : (customerTel : string) => void
+    //setCustomerTel : (customerTel : string) => void
+    setCustomerTel : (updateFunction: (prevTel: string) => string) => void;
 }
 
 type UserInfoProviderProps = {
