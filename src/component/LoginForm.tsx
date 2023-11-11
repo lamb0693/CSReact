@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import { useState, useContext, useEffect} from 'react';
-//import { SERVER_ADDRESS } from '../Cons';
+import { SERVER_ADDRESS } from '../Cons';
 import axios, {AxiosResponse} from "axios"
 import { UserInfo, UserInfoStatusContext } from '../UserInfoStatusContext';
 import { useNavigate } from 'react-router-dom'
@@ -35,7 +35,7 @@ export const LoginForm = () => {
 
     const getToken3 = async () => {
         try{
-            const response : AxiosResponse =  await axios.post("/getToken",
+            const response : AxiosResponse =  await axios.post(SERVER_ADDRESS + "/getToken",
                 {
                     tel : tel,
                     password : password

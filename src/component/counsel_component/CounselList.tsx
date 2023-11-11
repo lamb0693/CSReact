@@ -3,7 +3,7 @@ import { UserInfo, UserInfoStatusContext } from '../../UserInfoStatusContext';
 import { useContext, useEffect, useState} from 'react'
 import axios, {AxiosResponse} from "axios";
 import { AddCounsel } from "../../AddCounsel";
-// import { SERVER_ADDRESS } from "../Cons"; 프록시 설정후 필요 없어짐
+import { SERVER_ADDRESS } from "../../Cons"; //프록시 설정후 필요 없어짐
 
 export const CounselList = () => {
 
@@ -24,7 +24,7 @@ export const CounselList = () => {
         if(localStorage.getItem("accessToken") == null && localStorage.getItem("accesstoken")==="" )  return
 
         const authHeader : string = "Bearer:" + localStorage.getItem("accessToken")
-        console.log(authHeader)
+        console.log("authHeader", authHeader)
 
   
         try {
@@ -32,7 +32,7 @@ export const CounselList = () => {
             const formData = new FormData();
             formData.append('noOfDisplay', '30');
             formData.append('tel', userInfo.customorTel)
-            const result : AxiosResponse<Array<BoardListType>> = await axios.post("api/board/list", formData,  
+            const result : AxiosResponse<Array<BoardListType>> = await axios.post(SERVER_ADDRESS + "/api/board/list", formData,  
                 {headers: {
                     Authorization: authHeader,
                 }

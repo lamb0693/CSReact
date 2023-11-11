@@ -4,6 +4,7 @@ import { useContext, useEffect, useState} from 'react'
 import axios, {AxiosResponse} from "axios";
 import Container from 'react-bootstrap/Container';
 import { useNavigate } from "react-router-dom";
+import { SERVER_ADDRESS } from "../Cons";
 //import { SERVER_ADDRESS } from "../Cons"; 프록시 설정후 필요 없어짐
 
 export const CSRHome = () => {
@@ -41,7 +42,7 @@ export const CSRHome = () => {
 
   
         try {
-            const result : AxiosResponse<PagedBoardListType> = await axios.get("api/board/listUnReplied/0",  {
+            const result : AxiosResponse<PagedBoardListType> = await axios.get(SERVER_ADDRESS + "/api/board/listUnReplied/0",  {
                 headers: {
                     Authorization: authHeader,
                 }

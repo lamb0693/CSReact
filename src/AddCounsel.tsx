@@ -2,6 +2,7 @@ import { Button, Form, InputGroup } from "react-bootstrap"
 import { useState, useContext } from "react"
 import axios, { AxiosResponse } from "axios"
 import { UserInfo, UserInfoStatusContext } from "./UserInfoStatusContext"
+import { SERVER_ADDRESS } from "./Cons"
 
 type AddCounselProps = {
     getBoardList : ()=>void
@@ -41,7 +42,7 @@ export const AddCounsel = (props : AddCounselProps) => {
         formData.append("message", message )
 
         try {
-            const result : AxiosResponse<String> = await axios.post("/api/board/create", formData, {
+            const result : AxiosResponse<String> = await axios.post(SERVER_ADDRESS + "/api/board/create", formData, {
                 headers: {
                     Authorization: authHeader,
                 }
@@ -55,7 +56,7 @@ export const AddCounsel = (props : AddCounselProps) => {
             if(userInfo.role === "CSR"){
                 const formData2 = new FormData()
                 formData2.append('customerTel', strTel)
-                const result2 : AxiosResponse<String> = await axios.post("/api/board/markReply", formData2, {
+                const result2 : AxiosResponse<String> = await axios.post(SERVER_ADDRESS + "/api/board/markReply", formData2, {
                     headers: {
                         Authorization: authHeader,
                     }
@@ -73,7 +74,7 @@ export const AddCounsel = (props : AddCounselProps) => {
     }
 
     return (
-        <Form>
+        <Form className="mb-3">
             <InputGroup>
                 <Form.Control type="text" aria-label="Recipient's username with two button addons"
                      placeholder="상담내용 입력" onChange={handleEditChange}/>
