@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom"
-import { useContext, useEffect, useState } from "react"
-import { UserInfo, UserInfoStatusContext } from "../UserInfoStatusContext"
+import { useState } from "react"
 import axios,{ AxiosResponse } from "axios"
 import { Button, Col, Container, Form, Row } from "react-bootstrap"
 import { SERVER_ADDRESS } from "../Cons"
