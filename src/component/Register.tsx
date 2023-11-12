@@ -26,7 +26,7 @@ export const Register = () => {
  
             console.log(response.data, response.status)
             if(response.status === 200){
-                alert("회원 가입 성공")
+                alert("회원 가입 성공, 로그인 하세요")
                 navigateTo("/")
             }else {
                 alert("회원 가입 실패" + response.statusText)
