@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react"
 import { UserInfo, UserInfoStatusContext } from "../UserInfoStatusContext"
 import axios,{ AxiosResponse } from "axios"
 import { Button, Col, Container, Form, Row } from "react-bootstrap"
+import { SERVER_ADDRESS } from "../Cons"
 
 export const Register = () => {
     const navigateTo  = useNavigate()
@@ -19,7 +20,7 @@ export const Register = () => {
         }
 
         try{
-            const response : AxiosResponse =  await axios.post("/register", 
+            const response : AxiosResponse =  await axios.post(SERVER_ADDRESS + "/register", 
                 data   
             )
  
