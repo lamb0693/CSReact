@@ -35,16 +35,12 @@ export const CSRHome = () => {
     const userInfo : UserInfo | undefined  = useContext(UserInfoStatusContext)
 
     const getBoardList = async () => {
-        if(localStorage.getItem("accessToken") == null && localStorage.getItem("accesstoken")==="" )  return
+        if(sessionStorage.getItem("accessToken") == null || sessionStorage.getItem("accesstoken")==="" )  return
 
-        const authHeader : string = "Bearer:" + localStorage.getItem("accessToken")
-        console.log(authHeader)
-
-  
         try {
             const result : AxiosResponse<PagedBoardListType> = await axios.get(SERVER_ADDRESS + "/api/board/listUnReplied/0",  {
                 headers: {
-                    Authorization: authHeader,
+                    Authorization: "Bearer:" + sessionStorage.getItem("accessToken"),
                 }
             })
 

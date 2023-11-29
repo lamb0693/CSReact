@@ -6,7 +6,7 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import { useState, useContext, useEffect} from 'react';
 import { SERVER_ADDRESS } from '../Cons';
-import axios, {AxiosResponse} from "axios"
+import axios, {AxiosError, AxiosResponse} from "axios"
 import { UserInfo, UserInfoStatusContext } from '../UserInfoStatusContext';
 import { useNavigate } from 'react-router-dom'
 
@@ -20,14 +20,14 @@ export const LoginForm = () => {
     const userInfo : UserInfo | undefined  = useContext(UserInfoStatusContext)
 
     useEffect( () => {
-        if(userInfo?.role === 'USER') navigateTo("/")
+        if(userInfo?.role === 'USER') navigateTo("/client_counsel_list")
         else if (userInfo?.role === 'CSR') navigateTo("/csr_home")
     }) 
 
-    // test용
-    // useEffect(() => {
-    //     console.log("userInfo", userInfo?.tel, userInfo?.customorTel, userInfo?.role);
-    //   }, [userInfo?.customorTel]);
+    //test용
+    useEffect(() => {
+        console.log("userInfo", userInfo?.tel, userInfo?.customorTel, userInfo?.role);
+      }, [userInfo?.customorTel]);
 
     if(userInfo === undefined){
         return <div>Form is Not Initialized due to userInfo is undefined</div>
@@ -49,21 +49,25 @@ export const LoginForm = () => {
                 userInfo.setRole(response.data.role)
                 userInfo.setBLogin(true)
                 userInfo.setCustomerTel( prev => response.data.tel )
-                /* local storage 에 저장*/
-                console.log("tel 저장", response.data.tel)
-                localStorage.setItem("accessToken", response.data.accessToken)
-                localStorage.setItem("tel", response.data.tel)
-                console.log("customerTel 저장", response.data.tel)
-                localStorage.setItem("customerTel", response.data.tel)
-                localStorage.setItem("role", response.data.role)
-                localStorage.setItem("bLogin", "LOGIN")
+                
+                // reload에 대비하려면 sessionStroage에 저장
+                sessionStorage.setItem("accessToken", response.data.accessToken)
+                sessionStorage.setItem("tel", response.data.tel)
+                sessionStorage.setItem("customerTel", response.data.tel)
+                sessionStorage.setItem("role", response.data.role)
+                sessionStorage.setItem("bLogin", "true")
             }else {
                 console.log("response is not 200")
-                alert("bad request or server error")
+                alert(response.data.accessToken)
             }
         } catch(err ) {
-            console.log(err)
-            alert("bad request or server error")
+            if (axios.isAxiosError(err)) {
+                console.log(err)
+                if( err.response?.status === 401) alert(err.response?.data.accessToken);
+                else alert ("시스템 관리자에 문의하세요")
+            } else {
+                alert("시스템 관리자에게 문의하세요")
+            }
         }  
  
     }

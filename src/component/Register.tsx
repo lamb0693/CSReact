@@ -32,8 +32,13 @@ export const Register = () => {
                 console.log("response is not 200")
             }
         } catch(err ) {
-            console.log(err)
-            alert(err)
+            if (axios.isAxiosError(err)) {
+                console.log(err)
+                if( err.response?.status === 400) alert(err.response?.data);
+                else alert ("시스템 관리자에 문의하세요")
+            } else {
+                alert("시스템 관리자에게 문의하세요")
+            }
         }  
  
     }
@@ -41,7 +46,7 @@ export const Register = () => {
     
     const handleSubmit = (event:React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
-        alert(tel + ", " + password + "," + name)
+    //    alert(tel + ", " + password + "," + name)
         register()
      }
 

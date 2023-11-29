@@ -14,11 +14,11 @@ export const LogoutForm = () => {
     }
 
     const doLogout = () => {
-        localStorage.removeItem("accessToken")
-        localStorage.removeItem("tel")
-        localStorage.removeItem("role")
-        localStorage.removeItem("bLogin")
-        localStorage.removeItem("customerTel")
+        sessionStorage.removeItem("accessToken")
+        sessionStorage.removeItem("tel")
+        sessionStorage.removeItem("role")
+        sessionStorage.removeItem("bLogin")
+        sessionStorage.removeItem("customerTel")
 
         userInfo.setTel("")
         userInfo.setAccessToken("")

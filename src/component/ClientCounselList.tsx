@@ -1,13 +1,14 @@
 import { Alert, Container, Table } from "react-bootstrap"
-import { UserInfo, UserInfoStatusContext } from '../../UserInfoStatusContext';
+import { UserInfo, UserInfoStatusContext } from '../UserInfoStatusContext';
 import { useContext, useEffect, useState, MouseEvent} from 'react'
 import axios, {AxiosResponse} from "axios";
-import { AddCounsel } from "../AddCounsel";
-import { SERVER_ADDRESS } from "../../Cons"; 
+import { AddCounsel } from "./AddCounsel";
+import { SERVER_ADDRESS } from "../Cons";
 import { useNavigate } from "react-router-dom";
+import { CounselList } from "./counsel_component/CounselList";
 
-export const CounselList = () => {
-
+export const ClientCounselList = () => {
+ 
     const navigateTo  = useNavigate()
 
     type BoardListType = {
@@ -68,34 +69,12 @@ export const CounselList = () => {
 
     return (
         <Container>
-            <AddCounsel getBoardList={getBoardList}></AddCounsel> 
-            <Table striped bordered hover>
-                <thead>
-                    <tr>
-                        <th>작성자</th>
-                        <th>종류</th>
-                        <th>메시지</th>
-                        <th>생성날자</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        boardListArray?.map( (boardList) => {
-                            return(
-                                <tr key={boardList.board_id} 
-                                    onClick={(event) => viewDetail(event, boardList.board_id)}
-                                    onMouseOver={(event)=>{event.currentTarget.style.cursor='pointer'}}>
-                                    <td>{boardList.name}</td>
-                                    <td>{boardList.content}</td>
-                                    <td>{boardList.message}</td>
-                                    <td>{boardList.strUpdatedAt}</td>
-                                </tr>
-                            )
-                        })
-                    }
-                </tbody>
-            </Table>
+            <Alert variant="primary">
+                상담 내역
+            </Alert>
+            {/* <AddCounsel getBoardList={getBoardList}></AddCounsel> */}
+            <CounselList></CounselList>
         </Container>
 
-    )
+    )   
 }

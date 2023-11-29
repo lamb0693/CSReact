@@ -8,7 +8,7 @@ export const ClientHome = () => {
     return (
         <Container style={{paddingTop : "2vh"}}>
             <div className={styles.imageDiv}>
-                <img src="/image/home.JPG" className={styles.imageClass} alt="academy"/>
+                <img src="https://ldwcsapp1472.s3.ap-northeast-2.amazonaws.com/image/home.JPG" className={styles.imageClass} alt="academy"/>
             </div>
 
          </Container>

@@ -1,8 +1,8 @@
 import { Button, Form, InputGroup } from "react-bootstrap"
 import { useState, useContext } from "react"
 import axios, { AxiosResponse } from "axios"
-import { UserInfo, UserInfoStatusContext } from "./UserInfoStatusContext"
-import { SERVER_ADDRESS } from "./Cons"
+import { UserInfo, UserInfoStatusContext } from "../UserInfoStatusContext"
+import { SERVER_ADDRESS } from "../Cons"
 
 type AddCounselProps = {
     getBoardList : ()=>void
@@ -17,34 +17,27 @@ export const AddCounsel = (props : AddCounselProps) => {
     // data 를 upload 한다
     const uploadMessage = async (event:React.MouseEvent<HTMLButtonElement>) => {
 
-        // if(userInfo == null || message != null) {
-        //     console.error(userInfo, message)
-        //     return <div>Upload Error</div>
-        // } 
-        if(localStorage.getItem("accessToken") === null || localStorage.getItem("accesstoken")==="" )  return
-        const authHeader : string = "Bearer:" + localStorage.getItem("accessToken")
-        console.log(authHeader)
+        if(userInfo == null || message == null) {
+            console.error(userInfo, message)
+            return <div>Upload Error</div>
+        } 
 
-        // 자기 전화번호는 accessToken으로 감, customerTel만 실어서 보냄
-        if(localStorage.getItem("tel") === null  || localStorage.getItem("tel")==="" ) return
-        if(userInfo == null) return
+          // 자기 전화번호는 accessToken으로 감, customerTel만 실어서 보냄
+        // if(localStorage.getItem("tel") === null  || localStorage.getItem("tel")==="" ) return
+        // if(userInfo == null) return
 
         const strTel = userInfo.customorTel  
         console.log("customerTel ", strTel)  
 
-        //const strTel : string ="" + localStorage.getItem("customerTel")
-
-
-
         const formData = new FormData()
-        formData.append('customerTel', strTel)
+        formData.append('customerTel', userInfo.customorTel)
         formData.append('content', "TEXT")
         formData.append("message", message )
 
         try {
             const result : AxiosResponse<String> = await axios.post(SERVER_ADDRESS + "/api/board/create", formData, {
                 headers: {
-                    Authorization: authHeader,
+                    Authorization: "Bearer:" + sessionStorage.getItem("accessToken"),
                 }
             })
 
@@ -58,7 +51,7 @@ export const AddCounsel = (props : AddCounselProps) => {
                 formData2.append('customerTel', strTel)
                 const result2 : AxiosResponse<String> = await axios.post(SERVER_ADDRESS + "/api/board/markReply", formData2, {
                     headers: {
-                        Authorization: authHeader,
+                        Authorization:"Bearer:" + sessionStorage.getItem("accessToken"),
                     }
                 })
                 console.log(result2.data)
