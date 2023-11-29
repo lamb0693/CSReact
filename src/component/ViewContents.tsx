@@ -48,10 +48,10 @@ export const ViewContents = (props : ViewContentsType) => {
                     timeout: 5000,
                 })
 
-                console.log(result.data)  //2. blob 으로 변환된 상태
+                //console.log(result.data)  //2. blob 으로 변환된 상태
 
                 const contentType = result.headers['content-type'];
-                console.log('Content-Type:', contentType);
+                //console.log('Content-Type:', contentType);
 
                 // Convert binary data to Blob
                 // 위에서 responseType을 blob이라 정해 줘서 필요 없다.
@@ -61,7 +61,7 @@ export const ViewContents = (props : ViewContentsType) => {
                 const reader = new FileReader();
                 reader.onloadend = () => {
                     const imageSrc = reader.result as string;
-                    console.log('Image Source:', imageSrc);
+                    //console.log('Image Source:', imageSrc);
                     setImage(imageSrc);
                 };
                 reader.readAsDataURL(result.data);

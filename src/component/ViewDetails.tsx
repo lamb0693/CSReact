@@ -25,12 +25,12 @@ export const ViewDetails = () => {
     const board_id = location.state.board_id
 
     useEffect( () => {
-        console.log("useEffect called")
+        //console.log("useEffect called")
         getBoard()
     }, []) 
   
     const getBoard = async () => {
-        console.log("userInfo in getBoardList" ,  userInfo)
+        //console.log("userInfo in getBoardList" ,  userInfo)
         if(userInfo==null || userInfo===undefined) return
  
         try {
@@ -42,7 +42,7 @@ export const ViewDetails = () => {
                 }
             })
 
-            console.log(result.data)
+            //console.log(result.data)
             setBoard(result.data)
             
         } catch ( err){

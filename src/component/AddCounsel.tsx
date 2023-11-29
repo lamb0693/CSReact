@@ -1,4 +1,4 @@
-import { Button, Form, InputGroup } from "react-bootstrap"
+import { Button, Container, Form, InputGroup} from "react-bootstrap"
 import { useState, useContext } from "react"
 import axios, { AxiosResponse } from "axios"
 import { UserInfo, UserInfoStatusContext } from "../UserInfoStatusContext"
@@ -12,7 +12,17 @@ export const AddCounsel = (props : AddCounselProps) => {
 
     const [message, setMessage] = useState<string>("상담할 내용을 입력하세요")
 
+    const [uploadFilePath, setUploadFilePath] = useState<string | null>(null)
+
     const userInfo : UserInfo | undefined  = useContext(UserInfoStatusContext)
+
+    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (event.target.files && event.target.files.length > 0) {
+          const selectedFile = event.target.files[0];
+          console.log("selectedFile", selectedFile)
+          setUploadFilePath(URL.createObjectURL(selectedFile));
+        }
+    };
   
     // data 를 upload 한다
     const uploadMessage = async (event:React.MouseEvent<HTMLButtonElement>) => {
@@ -31,8 +41,17 @@ export const AddCounsel = (props : AddCounselProps) => {
 
         const formData = new FormData()
         formData.append('customerTel', userInfo.customorTel)
-        formData.append('content', "TEXT")
         formData.append("message", message )
+
+        const fileInput = document.getElementById('fileInput') as HTMLInputElement;
+
+        if (uploadFilePath && fileInput.files != null) {
+            const selectedFile = fileInput.files[0];
+            formData.append('file', selectedFile);
+            formData.append('content', "IMAGE")
+        } else {
+            formData.append('content', "TEXT")
+        }
 
         try {
             const result : AxiosResponse<String> = await axios.post(SERVER_ADDRESS + "/api/board/create", formData, {
@@ -40,6 +59,8 @@ export const AddCounsel = (props : AddCounselProps) => {
                     Authorization: "Bearer:" + sessionStorage.getItem("accessToken"),
                 }
             })
+
+            if(uploadFilePath) setUploadFilePath(null)
 
             console.log(result.data)
             props.getBoardList()
@@ -58,7 +79,13 @@ export const AddCounsel = (props : AddCounselProps) => {
             }
             
         } catch ( err){
-            console.log( err )
+            if (axios.isAxiosError(err)) {
+                console.log(err)
+                if( err.response?.status === 400) alert(err.response?.data);
+                else alert (err.response?.data)
+            } else {
+                alert("시스템 관리자에게 문의하세요")
+            }
         }
     }
 
@@ -67,12 +94,18 @@ export const AddCounsel = (props : AddCounselProps) => {
     }
 
     return (
-        <Form className="mb-3">
-            <InputGroup>
-                <Form.Control type="text" aria-label="Recipient's username with two button addons"
-                     placeholder="상담내용 입력" onChange={handleEditChange}/>
-                <Button variant="outline-secondary" onClick={uploadMessage}>전송</Button>
-            </InputGroup>
-        </Form>
+        <Container>
+            <Form className="mb-3">
+                <InputGroup>
+                    <Form.Control type="text" aria-label="Recipient's username with two button addons"
+                        placeholder="상담내용 입력" onChange={handleEditChange}/>
+                    <Form.Control id="fileInput" type="file" accept=".jpg, .jpeg" onChange={handleFileChange} />
+                    <Form.Label>사진 첨부(jpg 만 가능)</Form.Label>
+                    <Button variant="outline-secondary" onClick={uploadMessage}>전송</Button>
+                </InputGroup>
+            </Form>
+            {uploadFilePath && <img src={uploadFilePath} width="100%"></img> }
+        </Container>
+
     )
 }

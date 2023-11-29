@@ -24,11 +24,11 @@ export const CounselList = () => {
 
 
     const userInfo : UserInfo | undefined  = useContext(UserInfoStatusContext)
-    console.log("userInfo" ,  userInfo)
+    //console.log("userInfo" ,  userInfo)
 
     const getBoardList = async () => {
 
-        console.log("userInfo in getBoardList" ,  userInfo)
+        //console.log("userInfo in getBoardList" ,  userInfo)
         if(userInfo==null || userInfo===undefined) return
   
         try {
@@ -41,11 +41,11 @@ export const CounselList = () => {
                 }
             })
 
-            console.log(result.data)
+            //console.log(result.data)
             setBoardListArray(result.data)
             
         } catch ( err){
-            console.log( err )
+            //console.log( err )
         }
 
     }
@@ -60,7 +60,7 @@ export const CounselList = () => {
     }
 
     const viewDetail = (event : MouseEvent, board_id:number) => {
-        console.log(event.currentTarget.id)
+        //console.log(event.currentTarget.id)
         navigateTo("/view_details/", {state : {
             board_id : board_id
         }})
@@ -73,7 +73,7 @@ export const CounselList = () => {
                 <thead>
                     <tr>
                         <th>작성자</th>
-                        <th>종류</th>
+                        <th>첨부</th>
                         <th>메시지</th>
                         <th>생성날자</th>
                     </tr>
@@ -86,7 +86,10 @@ export const CounselList = () => {
                                     onClick={(event) => viewDetail(event, boardList.board_id)}
                                     onMouseOver={(event)=>{event.currentTarget.style.cursor='pointer'}}>
                                     <td>{boardList.name}</td>
-                                    <td>{boardList.content}</td>
+                                    {boardList.content==="TEXT" && <td>문자 메시지</td>}
+                                    {boardList.content==="IMAGE" && <td>사진</td>}
+                                    {boardList.content==="PAINT" && <td>그림판</td>}
+                                    {boardList.content==="AUDIO" && <td>음성</td>}
                                     <td>{boardList.message}</td>
                                     <td>{boardList.strUpdatedAt}</td>
                                 </tr>
