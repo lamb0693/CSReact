@@ -14,6 +14,7 @@ import { CounselList } from './component/counsel_component/CounselList';
 import { Register } from './component/Register';
 import { CSRReply } from './component/CSRReply';
 import { ViewDetails } from './component/ViewDetails';
+import { WebChattingRoom } from './component/WebChattingRoom';
 
 function App() {
     return (
@@ -28,6 +29,7 @@ function App() {
                         <Route path="/client_counsel_list" element={<CounselList/>}/>
                         <Route path="/view_details" element={<ViewDetails/>}/>
                         <Route path="/csr_reply" element={<CSRReply/>}/>
+                        <Route path="/web_chatting_room" element={<WebChattingRoom/>}/>
                         <Route path="/login" element={<LoginForm/>}/>
                         <Route path="/register" element={<Register/>}/>
                         <Route path="/logout" element={<LogoutForm/>}/>

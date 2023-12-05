@@ -22,6 +22,7 @@ export const MenuBar = () => {
                     <Nav className="me-auto">
                         {userInfo.role==="USER" && <Nav.Link href="/client_counsel_list">고객 게시판</Nav.Link>}
                         {userInfo.role==="CSR" && <Nav.Link href="/csr_home">상담대기 게시판</Nav.Link> }
+                        {userInfo.role==="CSR" && <Nav.Link href="/web_chatting_room">웹상담방</Nav.Link> }
                         {/* {userInfo.role==="CSR" && userInfo.customorTel !== "" && <Nav.Link href="/csr_reply">고객 문의 답변 달기</Nav.Link>} */}
                     </Nav>
                     <Nav>
