@@ -108,6 +108,22 @@ export const WebChattingRoom = () => {
         console.log('stroke')
       }
     });
+
+    console.log('drawing lineCustomer', linesCustomer)
+    linesCustomer.forEach((line) => {
+      console.log(line)
+      // if (line.length > 1) {
+      //   context.beginPath();
+      //   context.moveTo(line[0].x, line[0].y);
+  
+      //   for (let i = 1; i < line.length; i++) {
+      //     context.lineTo(line[i].x, line[i].y);
+      //   }
+  
+      //   context.stroke();
+      //   console.log('stroke')
+      // }
+    });
   };
 
 
