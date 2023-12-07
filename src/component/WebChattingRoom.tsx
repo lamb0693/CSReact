@@ -24,7 +24,7 @@ export const WebChattingRoom = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [curLine, setCurrentLine] = useState<MyPoint[]>([])
   const [linesCSR, setLinesCSR] = useState<Array<Array<MyPoint>>>([])
-  const [linesCustomer, setLinesCustomer] = useState([])
+  const [linesCustomer, setLinesCustomer] = useState<Array<Array<MyPoint>>>([])
   const isDrawingRef = useRef(false);
   //
 
@@ -91,10 +91,10 @@ export const WebChattingRoom = () => {
   
     context.clearRect(0, 0, canvas.width, canvas.height);
   
-    context.strokeStyle = "red";
     context.lineWidth = 5;
   
     console.log('drawing lineCSR', linesCSR)
+    context.strokeStyle = 'blue';
     linesCSR.forEach((line) => {
       if (line.length > 1) {
         context.beginPath();
@@ -110,19 +110,20 @@ export const WebChattingRoom = () => {
     });
 
     console.log('drawing lineCustomer', linesCustomer)
+    context.strokeStyle = 'red';
     linesCustomer.forEach((line) => {
       console.log(line)
-      // if (line.length > 1) {
-      //   context.beginPath();
-      //   context.moveTo(line[0].x, line[0].y);
+      if (line.length > 1) {
+        context.beginPath();
+        context.moveTo(line[0].x, line[0].y);
   
-      //   for (let i = 1; i < line.length; i++) {
-      //     context.lineTo(line[i].x, line[i].y);
-      //   }
+        for (let i = 1; i < line.length; i++) {
+          context.lineTo(line[i].x, line[i].y);
+        }
   
-      //   context.stroke();
-      //   console.log('stroke')
-      // }
+        context.stroke();
+        console.log('stroke')
+      }
     });
   };
 
@@ -133,11 +134,11 @@ export const WebChattingRoom = () => {
     if(socketRef.current == null) {
       console.error("socketRef null")
     } else {
-      socketRef.current.on('linesCSR', (lines) => {
-        console.log('on lines csr', lines);
-        setLinesCSR( prevLines => lines );
-        drawLines()
-      });
+      // socketRef.current.on('linesCSR', (lines) => {
+      //   console.log('on lines csr', lines);
+      //   setLinesCSR( prevLines => lines );
+      //   drawLines()
+      // });
 
       socketRef.current.on('linesCustomer', (lines) => {
         console.log('on lines customer', lines);
@@ -151,7 +152,7 @@ export const WebChattingRoom = () => {
 
   useEffect( ()=> {
     drawLines()   
-  }, [linesCSR])
+  }, [linesCSR, linesCustomer])
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -168,11 +169,11 @@ export const WebChattingRoom = () => {
     };
 
     const handleMouseUp = (e: MouseEvent) => {
-      setCurrentLine((prevLine) => [...prevLine, new MyPoint(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop)]);
-      isDrawingRef.current = false;
-      console.log('Mouse up', curLine);
-      socketRef.current?.emit('add_csr_line', curLine);
+      const newLines = [...linesCSR, [...curLine]]
+      setLinesCSR(prev => newLines)
       setCurrentLine(prev => [])
+      isDrawingRef.current = false;
+      socketRef.current?.emit('linesCSR', newLines);
     };
 
     const handleMouseMove = (e: MouseEvent) => {
@@ -193,13 +194,17 @@ export const WebChattingRoom = () => {
 
   // server에서 하나 삭제 해야 한다
   const handleRemovePrev = () => {
+    const tempLines = [...linesCSR]
+    tempLines.pop()
+    setLinesCSR( tempLines )
     if(socketRef.current == null ) console.error("socketRef null")
-    else socketRef.current.emit('remove_prev_csr_line')
+    else socketRef.current?.emit('linesCSR', tempLines);
   }
 
   const handleRemoveAll = () => {
+    setLinesCSR([])
     if(socketRef.current == null ) console.error("socketRef null")
-    else socketRef.current.emit('remove_all_csr_line')    
+      else socketRef.current?.emit('linesCSR', []);   
   }
 
   const createOffer = async () => {
