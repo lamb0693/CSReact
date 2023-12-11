@@ -52,7 +52,7 @@ export const ViewDetails = () => {
 
 
     return (
-        <Container style={{minHeight : "65vh"}}>
+        <Container style={{minHeight : "65vh", overflow:"hidden"}}>
             <div className="fs-2 bg-success mb-2">작성자 : {board?.name}  시간 : {board?.strUpdatedAt}</div>
             { board!==null && <ViewContents board={board} /> }
         </Container>

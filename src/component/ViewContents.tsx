@@ -96,8 +96,8 @@ export const ViewContents = (props : ViewContentsType) => {
         <Container>
             {props.board.content==="TEXT" && <div className="fs-3 bg-warning">{props.board.message}</div>}
             {props.board.content === "IMAGE" && image && (
-                <img src={image} alt="Downloaded Image" style={{ width: '500px', height: '500px' }} /> )}
-            {props.board.content === "PAINT" && paint!==null && <PaintImage paint={paint}></PaintImage>}
+                <img src={image} alt="Downloaded Image" style={{ width: '100%'}} /> )}
+            {props.board.content === "PAINT" && paint!==null && <PaintImage paint={paint} ></PaintImage>}
         </Container>
     )
 }

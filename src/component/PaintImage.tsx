@@ -45,7 +45,9 @@ export const PaintImage = (props : PaintImagePropsType) => {
 
     return (
         <Container>
-            <canvas ref={canvasRef} className={styles.canvasClass} width="600" height="900"></canvas>
+            <Container style={{backgroundColor: "#acacac", overflow :"hidden", padding:"0", margin:"0 auto", height:'60vh', paddingTop:"15vh"}}>
+                <canvas ref={canvasRef} className={styles.canvasClass} width="380" height="300"></canvas>
+            </Container>
         </Container>
     )
 }

@@ -311,48 +311,57 @@ export const WebChattingRoom = () => {
 
   return (
     <Container>
-      <Row className="justify-content-around">
-        <Col>
-          <video
-            id="myvideo"
-            style={{
-              width: 380,
-              height: 240,
-              backgroundColor: "black",
-            }}
-            ref={myVideoRef}
-            autoPlay
-          />
-        </Col>
-        <Col>
-          <video
-            id="remotevideo"
-            style={{
-              width: 380,
-              height: 240,
-              backgroundColor: "green",
-            }}
-            ref={remoteVideoRef}
-            autoPlay
-          />
-        </Col>
-      </Row>
-      <Row className="justify-content-around">
-        <Col>
-          <canvas className="bg-secondary" 
-          width={400}
-          height={200}
-          style={{ overflow:"hidden"}}
-          ref={canvasRef}>
-          </canvas>
-        </Col>
-        <Col>
-          <div><button className="btn btn-warning" onClick={handleRemovePrev}>이전 삭제</button></div>
-          <div><button className="btn btn-danger" onClick={handleRemoveAll}>모두 삭제</button></div>
-        </Col>
-      </Row>
-
-      <CounselList></CounselList>
+      <Container style={{backgroundColor:"#acacac", marginBottom:"2vh", padding:"1vh"}}>
+        <Container style={{width : "324px", padding : "0"}}>
+          <Row className="justify-content-around" style={{marginBottom:"10px"}}>
+            <Col style={{backgroundColor:"#bcbcbc", width:"130px",padding : "0"}}>
+              <video
+                id="myvideo"
+                style={{
+                  width: 170,
+                  height: 160,
+                  backgroundColor: "black",
+                }}
+                ref={myVideoRef}
+                autoPlay
+              />
+            </Col>
+            <Col style={{backgroundColor:"#bcbcbc", width:"130px", padding : "0"}}>
+              <video
+                id="remotevideo"
+                style={{
+                  width: 170,
+                  height: 160,
+                  backgroundColor: "green",
+                }}
+                ref={remoteVideoRef}
+                autoPlay
+              />
+            </Col>
+          </Row>
+          <Row className="justify-content-around" style={{marginBottom: "10px"}}>
+            <Col style={{backgroundColor:"#bcbcbc", padding : "0"}}>
+              <canvas className="bg-secondary" 
+              width={347}
+              height={200}
+              style={{ overflow:"hidden"}}
+              ref={canvasRef}>
+              </canvas>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <button className="btn btn-warning" onClick={handleRemovePrev}>이전 삭제</button>
+            </Col>
+            <Col>
+              <button className="btn btn-danger" onClick={handleRemoveAll}>모두 삭제</button>
+            </Col>
+          </Row>
+        </Container>
+      </Container>
+      <Container>
+        <CounselList></CounselList>
+      </Container>
     </Container>
   );
 };
