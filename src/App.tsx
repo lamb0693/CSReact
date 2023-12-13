@@ -15,34 +15,37 @@ import { Register } from './component/Register';
 import { CSRReply } from './component/CSRReply';
 import { ViewDetails } from './component/ViewDetails';
 import { WebChattingRoom } from './component/WebChattingRoom';
+import { CounselContextProvider } from './component/CounselContext';
 
 function App() {
     return (
         <UserInfoProvider>
-            <div className="App">
-                <Header></Header>
-                <MenuBar></MenuBar>
-                <BrowserRouter>
-                    <Routes>
-                        <Route path="/" element={<ClientHome/>}/>
-                        <Route path="/csr_home" element={<CSRHome/>}/>
-                        <Route path="/client_counsel_list" element={<CounselList/>}/>
-                        <Route path="/view_details" element={<ViewDetails/>}/>
-                        <Route path="/csr_reply" element={<CSRReply/>}/>
-                        <Route path="/web_chatting_room" element={<WebChattingRoom/>}/>
-                        <Route path="/login" element={<LoginForm/>}/>
-                        <Route path="/register" element={<Register/>}/>
-                        <Route path="/logout" element={<LogoutForm/>}/>
-                        {/* <Route path="/about/intro" element={<Content/>}/>
-                        <Route path="/about/intro/:userId" element={<Content/>}/>
-                        <Route path='profile/*' element={<Home name={"Profile"}/>}>
-                            <Route path='special' element={<Content />} />
-                        </Route>
-                        <Route path='*' element={<Error/>}/> */}
-                    </Routes>
-                </BrowserRouter>
-                <Footer/>
-            </div>
+            <CounselContextProvider>
+                <div className="App">
+                    <Header></Header>
+                    <MenuBar></MenuBar>
+                    <BrowserRouter>
+                        <Routes>
+                            <Route path="/" element={<ClientHome/>}/>
+                            <Route path="/csr_home" element={<CSRHome/>}/>
+                            <Route path="/client_counsel_list" element={<CounselList/>}/>
+                            <Route path="/view_details" element={<ViewDetails/>}/>
+                            <Route path="/csr_reply" element={<CSRReply/>}/>
+                            <Route path="/web_chatting_room" element={<WebChattingRoom/>}/>
+                            <Route path="/login" element={<LoginForm/>}/>
+                            <Route path="/register" element={<Register/>}/>
+                            <Route path="/logout" element={<LogoutForm/>}/>
+                            {/* <Route path="/about/intro" element={<Content/>}/>
+                            <Route path="/about/intro/:userId" element={<Content/>}/>
+                            <Route path='profile/*' element={<Home name={"Profile"}/>}>
+                                <Route path='special' element={<Content />} />
+                            </Route>
+                            <Route path='*' element={<Error/>}/> */}
+                        </Routes>
+                    </BrowserRouter>
+                    <Footer/>
+                </div>
+            </CounselContextProvider>
         </UserInfoProvider>
     );
 }

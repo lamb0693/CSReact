@@ -4,6 +4,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import { io, Socket } from "socket.io-client";
 import { CounselList } from "./counsel_component/CounselList";
 import { UserInfo, UserInfoStatusContext } from "../UserInfoStatusContext";
+import { CounselContext, UploadInfo } from "./CounselContext";
 
 export const WebChattingRoom = () => {
   const socketRef = useRef<Socket>();
@@ -23,6 +24,9 @@ export const WebChattingRoom = () => {
   }
 
   const userInfo : UserInfo | undefined  = useContext(UserInfoStatusContext)
+  const uploadInfo : UploadInfo | undefined = useContext(CounselContext)
+
+  const [customerBoardUpdated, setCustomerBoardUpdated] = useState(false);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [curLine, setCurrentLine] = useState<MyPoint[]>([])
@@ -252,6 +256,14 @@ export const WebChattingRoom = () => {
       createOffer()
     });
 
+    // from Customer through socket
+    console.log("setting customer_board_updated")
+    socketRef.current.on("customer_board_updated", ()=> {
+      console.log('customer_board_updated')
+      setCustomerBoardUpdated((prev) => !prev);
+    });
+    
+
     console.log("setting answer")
     socketRef.current.on("answer", (answer) => {
       console.log("recv answer", answer);
@@ -313,6 +325,18 @@ export const WebChattingRoom = () => {
     console.log("userInfo has changed:", userInfo);
   }, [userInfo]);
 
+  // from AddCounsel
+  useEffect(() => {
+    if (uploadInfo?.uploaded) {
+      // Do something when a message is uploaded
+      console.log('A message has been uploaded');
+      socketRef.current?.emit('csr_board_updated')
+      // Reset the upload status
+      uploadInfo.setUplopaded(false);
+    }
+  }, [uploadInfo?.uploaded]);
+
+
   return (
     <Container>
       <Container style={{backgroundColor:"#acacac", marginBottom:"2vh", padding:"1vh"}}>
@@ -364,7 +388,7 @@ export const WebChattingRoom = () => {
         </Container>
       </Container>
       <Container>
-        <CounselList></CounselList>
+        <CounselList updated={customerBoardUpdated}></CounselList>
       </Container>
     </Container>
   );

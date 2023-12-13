@@ -3,6 +3,7 @@ import { useState, useContext } from "react"
 import axios, { AxiosResponse } from "axios"
 import { UserInfo, UserInfoStatusContext } from "../UserInfoStatusContext"
 import { SERVER_ADDRESS } from "../Cons"
+import { CounselContext, UploadInfo } from "./CounselContext"
 
 type AddCounselProps = {
     getBoardList : ()=>void
@@ -15,6 +16,8 @@ export const AddCounsel = (props : AddCounselProps) => {
     const [uploadFilePath, setUploadFilePath] = useState<string | null>(null)
 
     const userInfo : UserInfo | undefined  = useContext(UserInfoStatusContext)
+
+    const uploadInfo : UploadInfo | undefined  = useContext(CounselContext);
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files && event.target.files.length > 0) {
@@ -59,6 +62,8 @@ export const AddCounsel = (props : AddCounselProps) => {
                     Authorization: "Bearer:" + sessionStorage.getItem("accessToken"),
                 }
             })
+
+            uploadInfo?.setUplopaded(true);
 
             if(uploadFilePath) setUploadFilePath(null)
 

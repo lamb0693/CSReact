@@ -6,7 +6,7 @@ import { AddCounsel } from "../AddCounsel";
 import { SERVER_ADDRESS } from "../../Cons"; 
 import { useNavigate } from "react-router-dom";
 
-export const CounselList = () => {
+export const CounselList = ({ updated = false }) => {
 
     const navigateTo  = useNavigate()
 
@@ -54,6 +54,18 @@ export const CounselList = () => {
         console.log("useEffect called")
         getBoardList()
     }, []) 
+
+    useEffect( () => {
+        console.log("useEffect called")
+        getBoardList()
+    }, [userInfo]) 
+
+    useEffect(() => {
+        if (updated) {
+            console.log('CouselList : customer board updated')
+            getBoardList() 
+        }
+      }, [updated]);
 
     if(userInfo === undefined){
         return <div>Form is Not Initialized due to userInfo is undefined</div>

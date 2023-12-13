@@ -37,6 +37,7 @@ export const MenuBar = () => {
                         {
                             userInfo.bLogin && (
                                 <>
+                                    {userInfo.role==="CSR" && userInfo.customorTel && <span>연결 고객{userInfo.customorTel}</span>}
                                     <Nav.Link href="">{userInfo.tel}님</Nav.Link>
                                     <Nav.Link>{userInfo.role}</Nav.Link>
                                     {/* <CustomConfirmDialog onConfirm={doLogout} text="Logout" message="Logout할까요?"/> */}
