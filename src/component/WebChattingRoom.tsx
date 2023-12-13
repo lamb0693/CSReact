@@ -1,8 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useContext } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 //import { useParams } from "react-router-dom";
 import { io, Socket } from "socket.io-client";
 import { CounselList } from "./counsel_component/CounselList";
+import { UserInfo, UserInfoStatusContext } from "../UserInfoStatusContext";
 
 export const WebChattingRoom = () => {
   const socketRef = useRef<Socket>();
@@ -20,6 +21,8 @@ export const WebChattingRoom = () => {
       this.y = y;
     }
   }
+
+  const userInfo : UserInfo | undefined  = useContext(UserInfoStatusContext)
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [curLine, setCurrentLine] = useState<MyPoint[]>([])
@@ -243,8 +246,9 @@ export const WebChattingRoom = () => {
     });
 
     console.log("setting joined")
-    socketRef.current.on("joined", ()=> {
-      console.log('joined')
+    socketRef.current.on("joined", (custtomerTel : string)=> {
+      console.log('joined', custtomerTel)
+      userInfo?.setCustomerTel(prev=>custtomerTel)
       createOffer()
     });
 
@@ -305,9 +309,9 @@ export const WebChattingRoom = () => {
     };
   }, []);
 
-  // useEffect(() => {
-  //   setCanvasMouseListeners();
-  // }, [canvasRef.current])
+  useEffect(() => {
+    console.log("userInfo has changed:", userInfo);
+  }, [userInfo]);
 
   return (
     <Container>
